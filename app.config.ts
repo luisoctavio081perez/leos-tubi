@@ -17,11 +17,11 @@ const intentFilters = [
 
 module.exports = ({ config }: { config: ExpoConfig }) => {
   return {
-    name: 'NouTube',
-    slug: 'noutube',
+    name: "Leo's Tubi",
+    slug: 'leos-tubi',
     version,
     icon: './assets/images/icon.png',
-    scheme: 'noutube',
+    scheme: 'leostubi',
     userInterfaceStyle: 'automatic',
     newArchEnabled: true,
     ios: {

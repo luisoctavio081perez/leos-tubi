@@ -1,3 +1,4 @@
+import { AuthGate } from '@/components/AuthGate'
 import '@/lib/i18n'
 import './global.css'
 
@@ -29,7 +30,7 @@ function RootLayoutContent() {
   const pictureInPicture = useValue(ui$.pictureInPicture)
 
   return (
-    <>
+    <AuthGate>
       <StatusBar style={isDark ? 'light' : 'dark'} />
       {nIf(
         !pictureInPicture,
@@ -40,7 +41,7 @@ function RootLayoutContent() {
         !pictureInPicture,
         <View className={isDark ? 'bg-zinc-800' : 'bg-zinc-100'} style={{ height: insets.bottom }} />,
       )}
-    </>
+    </AuthGate>
   )
 }
 
