@@ -3,11 +3,17 @@ name: Build iOS IPA (Leo's Tubi)
 on:
   push:
     branches:
-      - leos-tubi-ios
       - main
+      - leos-tubi-ios
     tags:
       - 'v*'
   workflow_dispatch:
+    inputs:
+      create_release:
+        description: 'Publish as GitHub Release?'
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   build-ios:
@@ -26,29 +32,26 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
 
-      - name: Install Dependencies
+      - name: Install and Prebuild iOS
         run: |
-          bun install || npm install --legacy-peer-deps
-
-      - name: Bundle Content Scripts
-        run: |
-          bun run bundle:es || npm run bundle:es
-
-      - name: Expo Prebuild (Generate iOS Native Project)
-        run: |
-          npx expo prebuild -p ios --clean --no-install
+          bun link
+          bun install --frozen-lockfile
+          bun bundle:es
+          bun expo prebuild -p ios --clean --no-install
 
       - name: Install CocoaPods
         working-directory: ios
         run: |
           pod install
 
-      - name: Build iOS Application with Xcode
+      - name: Build iOS Application with Xcode (Unsigned / Ad-hoc)
         working-directory: ios
         run: |
           WORKSPACE=$(ls -d *.xcworkspace | head -n 1)
-          SCHEME="NouTube"
-          echo "Building workspace $WORKSPACE with scheme $SCHEME..."
+          # Dynamically detect scheme
+          SCHEME=$(xcodebuild -list -workspace "$WORKSPACE" | awk '/Schemes:/{flag=1;next}/^[[:space:]]*$/{flag=0}flag' | head -n 1 | xargs)
+          echo "Detected Workspace: $WORKSPACE"
+          echo "Detected Scheme: $SCHEME"
 
           xcodebuild clean build \
             -workspace "$WORKSPACE" \
@@ -61,27 +64,40 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             AD_HOC_CODE_SIGNING_ALLOWED=YES
 
-      - name: Package Payload and Create .IPA
+      - name: Package Payload into .IPA
+        working-directory: ios
         run: |
           mkdir -p Payload
-          APP_PATH=$(find ios/build/Build/Products/Release-iphoneos -name "*.app" -type d | head -n 1)
-          echo "Found app at: $APP_PATH"
+          APP_PATH=$(find build/Build/Products/Release-iphoneos -name "*.app" -type d | head -n 1)
+          echo "Packaging application from: $APP_PATH"
           cp -r "$APP_PATH" Payload/
           zip -r -9 "Leos_Tubi.ipa" Payload
-          echo "IPA created successfully: Leos_Tubi.ipa"
+          echo "Created Leos_Tubi.ipa successfully:"
           ls -lh Leos_Tubi.ipa
 
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Leos_Tubi_iOS_IPA
-          path: Leos_Tubi.ipa
+          path: ios/Leos_Tubi.ipa
           retention-days: 30
 
-      - name: Create Release
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Create or Update GitHub Release
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: Leos_Tubi.ipa
+          name: "Leo's Tubi iOS v${{ github.run_number }}"
+          tag_name: "v1.0.${{ github.run_number }}"
+          files: ios/Leos_Tubi.ipa
+          body: |
+            ## Leo's Tubi para iOS (iPhone & iPad)
+            - Compilación nativa para iOS (Swift + React Native / Expo)
+            - Incluye pantalla de autenticación y acceso VIP
+            - Audio en segundo plano, PiP y sin anuncios
+            
+            ### Cómo instalar en tu iPhone:
+            1. **Vía Sideloadly (PC):** Descarga el archivo `Leos_Tubi.ipa`, conecta tu iPhone por USB y arrástralo en Sideloadly.
+            2. **Vía Certificado OTA (Web):** Sube el `.ipa` a tu servicio de firma web.
+            3. **Vía TrollStore / AltStore / Esign / Scarlet.**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
