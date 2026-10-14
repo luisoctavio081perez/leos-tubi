@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Leo's Tubi | Descargar e Instalar en iPhone, iPad y Android</title>
+    <meta name="description" content="Descarga oficial de Leo's Tubi para iOS (iPhone/iPad) y Android. Disfruta de YouTube sin publicidad, con audio en segundo plano y reproducción flotante PiP.">
+    
+    <!-- OpenGraph / Social Meta -->
+    <meta property="og:title" content="Leo's Tubi - YouTube Sin Límites para iOS y Android">
+    <meta property="og:description" content="Sin anuncios, audio con pantalla apagada y acceso VIP. Instala directamente en tu iPhone o Android.">
+    <meta property="og:image" content="icon_512.png">
+    <meta property="og:type" content="website">
+
+    <!-- iOS Web App Meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Leo's Tubi">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-base: #06080d;
+            --bg-surface: #0b0f19;
+            --card-glass: rgba(16, 22, 36, 0.72);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-hover-border: rgba(255, 85, 0, 0.35);
+            --accent-orange: #ff5500;
+            --accent-orange-bright: #ff6a1a;
+            --accent-orange-glow: rgba(255, 85, 0, 0.35);
+            --accent-cyan: #00d2ff;
+            --accent-cyan-glow: rgba(0, 210, 255, 0.25);
+            --text-title: #ffffff;
+            --text-body: #cbd5e1;
+            --text-muted: #8492a6;
+            --success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Animated Mesh Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.28;
+            will-change: transform;
+            animation: floatOrb 18s ease-in-out infinite alternate;
+        }
+
+        .orb-1 {
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, var(--accent-orange) 0%, transparent 70%);
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .orb-2 {
+            width: 380px;
+            height: 380px;
+            background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%);
+            bottom: 10%;
+            right: -100px;
+            animation-duration: 22s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #7928ca 0%, transparent 70%);
+            top: 45%;
+            left: -100px;
+            animation-duration: 25s;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, 40px) scale(1.08); }
+            100% { transform: translate(-25px, -20px) scale(0.95); }
+        }
+
+        /* Container Layout */
+        .app-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 540px;
+            padding: 24px 18px 48px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Top Bar */
+        .top-navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 18px;
+            background: rgba(14, 18, 28, 0.7);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 9999px;
+            width: 100%;
+        }
+
+        .brand-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-mini-logo {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .brand-text {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .brand-text span {
+            color: var(--accent-orange);
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--success);
+            background: rgba(16, 185, 129, 0.12);
+            padding: 4px 10px;
+            border-radius: 9999px;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 8px var(--success);
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.2); }
+        }
+
+        /* Hero App Card */
+        .hero-card {
+            background: var(--card-glass);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 32px 24px 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 40px rgba(255, 85, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-orange), var(--accent-cyan), transparent);
+        }
+
+        /* Floating Logo */
+        .logo-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .logo-aura {
+            position: absolute;
+            inset: -15px;
+            background: radial-gradient(circle, rgba(255, 85, 0, 0.5) 0%, rgba(0, 210, 255, 0.3) 50%, transparent 75%);
+            filter: blur(16px);
+            border-radius: 50%;
+            z-index: 0;
+            animation: auraPulse 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes auraPulse {
+            0% { transform: scale(0.92); opacity: 0.6; }
+            100% { transform: scale(1.1); opacity: 0.95; }
+        }
+
+        .app-icon-img {
+            position: relative;
+            z-index: 1;
+            width: 120px;
+            height: 120px;
+            border-radius: 26px;
+            object-fit: cover;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 85, 0, 0.4);
+            animation: floatIcon 6s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-7px); }
+        }
+
+        .app-title {
+            font-size: 34px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, #ffffff 40%, #ff8c42 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .app-tagline {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.45;
+            max-width: 420px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .stat-chip {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-chip.rating {
+            color: #facc15;
+            border-color: rgba(250, 204, 21, 0.2);
+        }
+
+        /* Tab Switcher */
+        .tabs-header {
+            display: flex;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 5px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 22px;
+            gap: 4px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 14px;
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(255, 85, 0, 0.25) 0%, rgba(255, 85, 0, 0.12) 100%);
+            color: #ffffff;
+            border: 1px solid rgba(255, 85, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(255, 85, 0, 0.18);
+        }
+
+        /* Tab Content Containers */
+        .tab-content {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            gap: 16px;
+            animation: fadeInTab 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: flex;
+        }
+
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Action Buttons */
+        .btn-main-install {
+            width: 100%;
+            background: linear-gradient(135deg, #ff5500 0%, #ff2a00 100%);
+            color: #ffffff;
+            border: none;
+            padding: 18px 24px;
+            border-radius: 18px;
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(255, 60, 0, 0.45), 0 0 35px rgba(255, 85, 0, 0.25);
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-main-install:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(255, 60, 0, 0.55);
+        }
+
+        .btn-main-install:active {
+            transform: scale(0.98);
+        }
+
+        .btn-main-install::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(60deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
+            transform: rotate(30deg);
+            animation: sheen 4s infinite;
+        }
+
+        @keyframes sheen {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            30%, 100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        .btn-secondary {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            padding: 14px 20px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.99);
+        }
+
+        /* Scarlet & AltStore Subrow */
+        .alt-methods-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+        }
+
+        /* Downloader Box */
+        .downloader-box {
+            background: rgba(255, 85, 0, 0.07);
+            border: 1px solid rgba(255, 85, 0, 0.25);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .downloader-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .downloader-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .code-display {
+            background: #000000;
+            border: 1px dashed rgba(255, 85, 0, 0.4);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-number {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: var(--accent-orange);
+            font-family: monospace;
+        }
+
+        .btn-copy-code {
+            background: rgba(255, 85, 0, 0.2);
+            color: #ffffff;
+            border: 1px solid var(--accent-orange);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-copy-code:active {
+            transform: scale(0.95);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 100%;
+        }
+
+        .feature-card {
+            background: var(--card-glass);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: left;
+            transition: all 0.25s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--card-hover-border);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon-bubble {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(255, 85, 0, 0.12);
+            border: 1px solid rgba(255, 85, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--accent-orange);
+        }
+
+        .feature-card.cyan .feature-icon-bubble {
+            background: rgba(0, 210, 255, 0.12);
+            border-color: rgba(0, 210, 255, 0.25);
+            color: var(--accent-cyan);
+        }
+
+        .feature-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .feature-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* App Preview Mockup Card */
+        .preview-card {
+            background: var(--card-glass);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .preview-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .preview-img-container {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+            background: #000;
+        }
+
+        .preview-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .preview-img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Steps Instruction Card */
+        .guide-card {
+            background: var(--card-glass);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            text-align: left;
+        }
+
+        .guide-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .guide-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .steps-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .step-row {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 85, 0, 0.15);
+            border: 1.5px solid var(--accent-orange);
+            color: var(--accent-orange);
+            font-size: 13px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 12px rgba(255, 85, 0, 0.2);
+        }
+
+        .step-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .step-heading {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .step-description {
+            font-size: 12px;
+            color: var(--text-body);
+            line-height: 1.45;
+        }
+
+        .step-badge {
+            display: inline-block;
+            background: rgba(0, 210, 255, 0.12);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-top: 4px;
+        }
+
+        /* VIP Account Card */
+        .vip-card {
+            background: linear-gradient(135deg, rgba(255, 85, 0, 0.1) 0%, rgba(16, 22, 36, 0.8) 100%);
+            border: 1px solid rgba(255, 85, 0, 0.3);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 14px;
+        }
+
+        .vip-badge-tag {
+            background: var(--accent-orange);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 9999px;
+        }
+
+        .vip-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .vip-desc {
+            font-size: 13px;
+            color: var(--text-body);
+            line-height: 1.5;
+            max-width: 420px;
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: #ffffff;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 16px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.45);
+        }
+
+        /* FAQ Section */
+        .faq-card {
+            background: var(--card-glass);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 12px;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .faq-question {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            user-select: none;
+        }
+
+        .faq-icon {
+            font-size: 18px;
+            transition: transform 0.25s ease;
+            color: var(--accent-orange);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            transition: max-height 0.3s ease, margin-top 0.3s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 200px;
+            margin-top: 8px;
+        }
+
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* Footer */
+        .site-footer {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .footer-brand {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .footer-copy {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(16, 22, 36, 0.95);
+            border: 1px solid var(--accent-orange);
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 85, 0, 0.4);
+            z-index: 999;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 480px) {
+            .app-title { font-size: 28px; }
+            .btn-main-install { font-size: 16px; padding: 16px 20px; }
+            .alt-methods-row { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Lights -->
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+
+        <!-- Top Navigation -->
+        <header class="top-navbar">
+            <div class="brand-indicator">
+                <img src="icon.png" alt="Logo" class="brand-mini-logo">
+                <div class="brand-text">Leo <span>Streaming TV</span></div>
+            </div>
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>Servidor VIP Online</span>
+            </div>
+        </header>
+
+        <!-- Main Hero Card -->
+        <main class="hero-card">
+            
+            <div class="logo-box">
+                <div class="logo-aura"></div>
+                <img src="icon.png" alt="Leo's Tubi Neon Lion Icon" class="app-icon-img">
+            </div>
+
+            <h1 class="app-title">Leo's Tubi</h1>
+            <p class="app-tagline">Disfruta de YouTube sin publicidad intrusiva, con audio en segundo plano y modo Picture-in-Picture en tu dispositivo.</p>
+
+            <!-- Stats -->
+            <div class="stats-row">
+                <div class="stat-chip rating">★ 4.9 (Calificación)</div>
+                <div class="stat-chip">🚀 v1.0.11</div>
+                <div class="stat-chip">🍏 iOS & 🤖 Android</div>
+                <div class="stat-chip">📦 20.9 MB</div>
+            </div>
+
+            <!-- Platform Tabs -->
+            <div class="tabs-header">
+                <button class="tab-btn active" id="btnTabIos" onclick="switchTab('ios')">
+                    <span>🍏</span> iPhone / iPad
+                </button>
+                <button class="tab-btn" id="btnTabAndroid" onclick="switchTab('android')">
+                    <span>🤖</span> Android / TV
+                </button>
+                <button class="tab-btn" id="btnTabVip" onclick="switchTab('vip')">
+                    <span>🔑</span> Acceso VIP
+                </button>
+            </div>
+
+            <!-- TAB 1: iOS -->
+            <div class="tab-content active" id="tabIos">
+                <!-- Direct OTA Safari Button -->
+                <a id="btnInstallOta" href="itms-services://?action=download-manifest&url=https://luisoctavio081perez.github.io/leos-tubi/manifest.plist" class="btn-main-install">
+                    <span>⚡</span> INSTALAR EN IPHONE / IPAD
+                </a>
+
+                <!-- Alternative Download Methods -->
+                <div class="alt-methods-row">
+                    <a id="btnDownloadIpa" href="Leos_Tubi.ipa" class="btn-secondary" download>
+                        <span>📦</span> Descargar IPA Directo
+                    </a>
+                    <a id="btnScarlet" href="#" onclick="openScarletInstall(event)" class="btn-secondary">
+                        <span>📲</span> Abrir en Scarlet / Esign
+                    </a>
+                </div>
+
+                <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+                    * Requiere abrir este enlace en Safari en tu iPhone o iPad para instalación directa de un toque.
+                </p>
+            </div>
+
+            <!-- TAB 2: Android -->
+            <div class="tab-content" id="tabAndroid">
+                <!-- Direct APK Download Button -->
+                <a id="btnDownloadApk" href="Leos_Tubi.apk" class="btn-main-install" download>
+                    <span>📥</span> DESCARGAR APK PARA ANDROID
+                </a>
+
+                <!-- Downloader Code Box for Smart TVs / Fire TV -->
+                <div class="downloader-box">
+                    <div class="downloader-header">
+                        <span class="downloader-title">📺 Código para Downloader (Fire TV / Smart TV):</span>
+                    </div>
+                    <div class="code-display">
+                        <span class="code-number" id="downloaderCode">986542</span>
+                        <button class="btn-copy-code" onclick="copyDownloaderCode()">COPIAR</button>
+                    </div>
+                    <span style="font-size: 11px; color: var(--text-muted);">
+                        Abre la app <strong>Downloader</strong> en tu Fire TV Stick o Android TV y escribe el código arriba.
+                    </span>
+                </div>
+            </div>
+
+            <!-- TAB 3: VIP Access -->
+            <div class="tab-content" id="tabVip">
+                <p style="font-size: 13px; color: #cbd5e1; line-height: 1.5; text-align: center;">
+                    Leo's Tubi cuenta con autenticación segura exclusiva para suscriptores de <strong>Leo Streaming TV</strong>.
+                </p>
+                <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 14px; text-align: left; font-size: 12px; color: #cbd5e1;">
+                    <div style="font-weight: 700; color: #fff; margin-bottom: 6px;">🔐 Credenciales requeridas al abrir:</div>
+                    <div>• <strong>Usuario:</strong> Tu usuario asignado</div>
+                    <div>• <strong>Contraseña:</strong> Tu clave de acceso</div>
+                </div>
+                <a href="https://wa.me/?text=Hola%20Leo%20Streaming%20TV,%20deseo%20activar%20mi%20cuenta%20VIP%20de%20Leo's%20Tubi" target="_blank" class="btn-whatsapp" style="justify-content: center; width: 100%;">
+                    <span>💬</span> Solicitar / Renovar por WhatsApp
+                </a>
+            </div>
+
+        </main>
+
+        <!-- Features Showcase Grid -->
+        <section class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon-bubble">🚫</div>
+                <div class="feature-title">Cero Anuncios</div>
+                <div class="feature-desc">Olvídate de comerciales intermedios y banners publicitarios molestos.</div>
+            </div>
+
+            <div class="feature-card cyan">
+                <div class="feature-icon-bubble">🎧</div>
+                <div class="feature-title">Segundo Plano</div>
+                <div class="feature-desc">Escucha música o podcasts con la pantalla apagada o usando WhatsApp.</div>
+            </div>
+
+            <div class="feature-card cyan">
+                <div class="feature-icon-bubble">📺</div>
+                <div class="feature-title">Picture-in-Picture</div>
+                <div class="feature-desc">Ventana flotante nativa que flota sobre cualquier aplicación en iOS y Android.</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-bubble">⚡</div>
+                <div class="feature-title">Calidad 4K 60FPS</div>
+                <div class="feature-desc">Máxima fidelidad de audio y video con buffer ultra rápido sin cortes.</div>
+            </div>
+        </section>
+
+        <!-- Real App Preview Section -->
+        <section class="preview-card">
+            <div class="preview-header">
+                <div class="preview-title">
+                    <span>🎬</span> Interfaz Oficial de Leo's Tubi
+                </div>
+                <span style="font-size: 11px; color: var(--accent-orange); font-weight: 700;">PROBADO Y FUNCIONANDO</span>
+            </div>
+            <div class="preview-img-container">
+                <img src="app_preview.png" alt="Captura de Leo's Tubi en Funcionamiento" class="preview-img">
+            </div>
+        </section>
+
+        <!-- Step-by-Step Installation Guide (Dynamic for iOS / Android) -->
+        <section class="guide-card" id="guideIos">
+            <div class="guide-header">
+                <span style="font-size: 22px;">🍏</span>
+                <h2 class="guide-title">Cómo Instalar y Activar en tu iPhone / iPad</h2>
+            </div>
+
+            <div class="steps-flow">
+                <div class="step-row">
+                    <div class="step-circle">1</div>
+                    <div class="step-info">
+                        <div class="step-heading">Toca "Instalar en iPhone"</div>
+                        <div class="step-description">Abre esta página en <strong>Safari</strong> y pulsa el botón naranja. Aparecerá un aviso de confirmación de Apple: pulsa <strong>"Instalar"</strong>.</div>
+                    </div>
+                </div>
+
+                <div class="step-row">
+                    <div class="step-circle">2</div>
+                    <div class="step-info">
+                        <div class="step-heading">Espera la descarga en tu pantalla</div>
+                        <div class="step-description">Ve a la pantalla de inicio de tu iPhone. Verás cómo el icono del león neón de <strong>Leo's Tubi</strong> se descarga e instala automáticamente.</div>
+                    </div>
+                </div>
+
+                <div class="step-row">
+                    <div class="step-circle">3</div>
+                    <div class="step-info">
+                        <div class="step-heading">Autorizar en Ajustes de iOS</div>
+                        <div class="step-description">Entra en: <br><strong>Ajustes > General > VPN y gestión de dispositivos</strong></div>
+                        <span class="step-badge">Paso indispensable de Apple</span>
+                    </div>
+                </div>
+
+                <div class="step-row">
+                    <div class="step-circle">4</div>
+                    <div class="step-info">
+                        <div class="step-heading">Pulsar "Confiar"</div>
+                        <div class="step-description">Toca el perfil de desarrollador correspondiente y presiona <strong>"Confiar"</strong>.</div>
+                    </div>
+                </div>
+
+                <div class="step-row">
+                    <div class="step-circle">5</div>
+                    <div class="step-info">
+                        <div class="step-heading">Inicia sesión y disfruta</div>
+                        <div class="step-description">Abre Leo's Tubi, coloca tu <strong>Usuario y Contraseña VIP</strong> y disfruta de streaming ilimitado sin anuncios.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Frequently Asked Questions (FAQ) -->
+        <section class="faq-card">
+            <h2 style="font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">
+                ❓ Preguntas Frecuentes
+            </h2>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>¿Es seguro instalarlo en mi iPhone?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Totalmente. Leo's Tubi no requiere Jailbreak ni modificaciones al sistema operativo iOS. Se instala como una aplicación nativa estándar utilizando los protocolos oficiales de distribución de Apple.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>¿Por qué dice "Desarrollador empresarial no confiable"?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Es el mensaje estándar de seguridad de Apple cuando una aplicación se instala directamente fuera de la App Store oficial. Solo debes ir a <strong>Ajustes > General > VPN y gestión de dispositivos</strong> y presionar "Confiar" una sola vez.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>¿Funciona con la pantalla apagada?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Sí. Puedes bloquear tu pantalla o cambiar de aplicación y el audio continuará reproduciéndose en segundo plano con controles en el Centro de Control de iOS y la pantalla de bloqueo.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>¿Cómo solicito mis credenciales de acceso?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Comunícate con tu proveedor oficial de Leo Streaming TV vía WhatsApp para recibir o renovar tu usuario y contraseña de acceso al catálogo.
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-brand">Leo Streaming TV • Plataforma Privada</div>
+            <div class="footer-copy">© 2026 Leo's Tubi. Todos los derechos reservados. Desarrollado con tecnología de alta fidelidad.</div>
+        </footer>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toastMessage">
+        <span id="toastIcon">📋</span>
+        <span id="toastText">Código copiado al portapapeles</span>
+    </div>
+
+    <!-- Interactive Script -->
+    <script>
+        // Automatic platform detection on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+            const isAndroid = /android/i.test(userAgent);
+
+            if (isAndroid) {
+                switchTab('android');
+            } else {
+                switchTab('ios');
+            }
+
+            // Configure dynamic manifest link
+            configureManifestUrls();
+        });
+
+        // Tab Switcher
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            if (tabName === 'ios') {
+                document.getElementById('btnTabIos').classList.add('active');
+                document.getElementById('tabIos').classList.add('active');
+            } else if (tabName === 'android') {
+                document.getElementById('btnTabAndroid').classList.add('active');
+                document.getElementById('tabAndroid').classList.add('active');
+            } else if (tabName === 'vip') {
+                document.getElementById('btnTabVip').classList.add('active');
+                document.getElementById('tabVip').classList.add('active');
+            }
+        }
+
+        // Configure dynamic manifest URLs for itms-services protocol
+        function configureManifestUrls() {
+            const currentUrl = window.location.href.split('?')[0].split('#')[0];
+            const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1);
+            
+            // Si estamos en un hosting HTTPS real (ej: cPanel o GitHub Pages), usamos la URL de este dominio
+            let manifestUrl = baseUrl + 'manifest.plist';
+            if (!manifestUrl.startsWith('https://')) {
+                // Fallback verificado en GitHub Pages con certificado SSL válido
+                manifestUrl = 'https://luisoctavio081perez.github.io/leos-tubi/manifest.plist';
+            }
+
+            const itmsProtocolUrl = 'itms-services://?action=download-manifest&url=' + encodeURIComponent(manifestUrl);
+            const installBtn = document.getElementById('btnInstallOta');
+            if (installBtn) {
+                installBtn.setAttribute('href', itmsProtocolUrl);
+            }
+        }
+
+        // Scarlet Installer Integration
+        function openScarletInstall(e) {
+            e.preventDefault();
+            const currentUrl = window.location.href.split('?')[0].split('#')[0];
+            const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1);
+            const ipaUrl = (baseUrl.startsWith('https://')) ? (baseUrl + 'Leos_Tubi.ipa') : 'https://github.com/luisoctavio081perez/leos-tubi/releases/download/v1.0.11/Leos_Tubi.ipa';
+            
+            const scarletScheme = 'scarlet://install?url=' + encodeURIComponent(ipaUrl);
+            window.location.href = scarletScheme;
+
+            setTimeout(() => {
+                showToast('Abriendo instalador Scarlet...');
+            }, 500);
+        }
+
+        // Copy Downloader Code
+        function copyDownloaderCode() {
+            const code = document.getElementById('downloaderCode').innerText.trim();
+            navigator.clipboard.writeText(code).then(() => {
+                showToast('¡Código ' + code + ' copiado al portapapeles!');
+            }).catch(() => {
+                showToast('Código: ' + code);
+            });
+        }
+
+        // FAQ Toggle
+        function toggleFaq(element) {
+            element.classList.toggle('open');
+        }
+
+        // Show Toast Feedback
+        function showToast(message) {
+            const toast = document.getElementById('toastMessage');
+            const toastText = document.getElementById('toastText');
+            toastText.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>
