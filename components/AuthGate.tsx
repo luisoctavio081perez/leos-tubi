@@ -84,9 +84,11 @@ export function AuthGate({ children }: AuthGateProps) {
       <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
         <View style={styles.card}>
           {/* Brand Header */}
-          <View style={styles.logoBadge}>
-            <Text style={styles.logoEmoji}>🦁</Text>
-          </View>
+          <Image
+            source={require('@/assets/images/icon.png')}
+            style={styles.logoImage}
+            resizeMode="contain"
+          />
           <Text style={styles.title}>Leo's Tubi</Text>
           <Text style={styles.subtitle}>Leo Streaming TV • Acceso Premium</Text>
 
@@ -185,6 +187,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 20,
     elevation: 10,
+  },
+  logoImage: {
+    width: 96,
+    height: 96,
+    borderRadius: 22,
+    marginBottom: 16,
+    shadowColor: '#ff6600',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.45,
+    shadowRadius: 14,
+    elevation: 8,
   },
   logoBadge: {
     width: 68,

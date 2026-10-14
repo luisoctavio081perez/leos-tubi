@@ -62,10 +62,10 @@ module.exports = ({ config }: { config: ExpoConfig }) => {
           image: './assets/images/splash-icon.png',
           imageWidth: 200,
           resizeMode: 'contain',
-          backgroundColor: '#f9fafb',
+          backgroundColor: '#090a0f',
           dark: {
             image: './assets/images/splash-icon.png',
-            backgroundColor: '#27272a',
+            backgroundColor: '#090a0f',
           },
         },
       ],

@@ -385,7 +385,7 @@ export const SettingsTree = forwardRef<
           <View className="gap-6">
             <View className="rounded-[28px] border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900/80 px-5 py-5">
               <NouText className="text-[11px] uppercase tracking-[0.18em] text-zinc-600 dark:text-zinc-500">
-                NouTube
+                Leo's Tubi
               </NouText>
               <NouText className="mt-2 text-xl font-semibold tracking-tight">v{version}</NouText>
             </View>
