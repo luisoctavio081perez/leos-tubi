@@ -1185,6 +1185,7 @@
         function configureManifestUrls() {
             const currentUrl = window.location.href.split('?')[0].split('#')[0];
             const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1);
+            const isGitHubPages = window.location.hostname.includes('github.io');
             
             // Si estamos en un hosting HTTPS real (ej: cPanel o GitHub Pages), usamos la URL de este dominio
             let manifestUrl = baseUrl + 'manifest.plist';
@@ -1198,6 +1199,12 @@
             if (installBtn) {
                 installBtn.setAttribute('href', itmsProtocolUrl);
             }
+
+            // Si corre en GitHub Pages, el boton de descarga directa de IPA se redirige al release CDN de alta velocidad
+            const btnDownloadIpa = document.getElementById('btnDownloadIpa');
+            if (btnDownloadIpa && (isGitHubPages || !window.location.protocol.startsWith('http'))) {
+                btnDownloadIpa.setAttribute('href', 'https://github.com/luisoctavio081perez/leos-tubi/releases/download/v1.0.11/Leos_Tubi.ipa');
+            }
         }
 
         // Scarlet Installer Integration
@@ -1205,7 +1212,8 @@
             e.preventDefault();
             const currentUrl = window.location.href.split('?')[0].split('#')[0];
             const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1);
-            const ipaUrl = (baseUrl.startsWith('https://')) ? (baseUrl + 'Leos_Tubi.ipa') : 'https://github.com/luisoctavio081perez/leos-tubi/releases/download/v1.0.11/Leos_Tubi.ipa';
+            const isGitHubPages = window.location.hostname.includes('github.io');
+            const ipaUrl = (baseUrl.startsWith('https://') && !isGitHubPages) ? (baseUrl + 'Leos_Tubi.ipa') : 'https://github.com/luisoctavio081perez/leos-tubi/releases/download/v1.0.11/Leos_Tubi.ipa';
             
             const scarletScheme = 'scarlet://install?url=' + encodeURIComponent(ipaUrl);
             window.location.href = scarletScheme;
